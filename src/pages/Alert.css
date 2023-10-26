@@ -1,0 +1,10 @@
+/* Alert.css */
+.alert {
+    background-color: #ffcccc; /* Background color for error alerts */
+    color: #ff0000; /* Text color for error alerts */
+    padding: 10px;
+    border: 1px solid #ff0000; /* Border color for error alerts */
+    margin: 10px 0;
+    border-radius: 4px;
+  }
+  

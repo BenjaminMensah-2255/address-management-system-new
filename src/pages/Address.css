@@ -1,0 +1,260 @@
+.input-container {
+    display: flex;
+    gap:  10px; 
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: white;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    font-weight: bold;
+  }
+
+.edit-button {
+    background-color: #4c00b4;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+
+  }
+  
+  .edit-button:hover{
+    background-color: #2b0167;
+  }
+  .delete-button {
+    background-color: #f54242;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+
+  }
+  .delete-button:hover{
+    background-color: #9d0505;
+  }
+
+.update-button {
+    background-color: #4c00b4;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    margin-right: 5px; 
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+
+  }
+  .update-button:hover{
+  background-color: #2b0167;
+
+  }
+
+.add-button {
+    background-color: #4c00b4;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+  }
+  
+  .add-button:hover {
+    background-color: #45a049;
+  }
+  .input-container {
+    display: flex;
+    gap: 10px;
+    text-align: center;
+  }
+  
+  .input-container input[type="text"] {
+    width: 100%;
+    max-width: 150px; /* Adjust the width as needed */
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .input-container input[type="text"]:focus {
+    border-color: #4c00b4; /* Change border color on focus */
+    outline: none;
+  }
+  
+  .input-container input[type="text"]::placeholder {
+    color: #aaa; /* Placeholder text color */
+  }
+  
+  
+.text-box-shadow {
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+  font-style: italic;
+}
+.addressHead {
+  color: #9d0505;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+h2{
+  color:#c61597;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: bold;
+  font-family: sans-serif;
+} 
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+  top: 0;
+  background: #fff;
+  z-index: 1;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.address-list-container {
+  width: 100%;
+  text-align: center;
+  padding-top: 20px; /* Adjust the padding to create separation */
+}
+.search-container {
+  margin: 10px 0; /* Add some margin for separation */
+  text-align: center;
+}
+
+.search-container input[type="text"] {
+  width: 100%;
+  max-width: 300px; /* Adjust the width as needed */
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.search-container input[type="text"]:focus {
+  border-color: #4c00b4; /* Change border color on focus */
+  outline: none;
+}
+
+.search-container input[type="text"]::placeholder {
+  color: #aaa; /* Placeholder text color */
+}
+
+
+
+.table-container {
+  width: 100%;
+  max-width: 800px; /* Adjust as needed */
+}
+
+/* table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  box-shadow: 0 0 10px rgba( */
+  .pagination-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    align-items: center;
+  }
+  
+  .pagination-controls button {
+    padding: 10px 20px;
+    background-color: #4c00b4;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pagination-controls button:hover {
+    background-color: #2b0167;
+  }
+  
+  .pagination-controls button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .pagination-controls button:not(:disabled) {
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+  }
+  .separator {
+    width: 10px; /* Adjust the width as needed */
+  }
+  .add-task-container {
+    margin-top: 20px; /* Add margin to separate the 'Add New Address' section */
+  }
+  /* Example CSS for your page content containers */
+.page-content {
+  max-height: 100vh; /* Set a maximum height for the content to allow scrolling */
+  overflow-y: auto; /* Enable vertical scrolling when content overflows */
+}
+.page-content {
+  max-height: 100vh; /* Set a maximum height for the content to allow scrolling */
+  overflow-y: auto;
+  padding: 20px; /* Enable vertical scrolling when content overflows */
+}
+/* Add styles for smaller screens using media queries */
+@media (max-width: 768px) {
+  table {
+    font-size: 10px; /* Decrease font size for smaller screens */
+  }
+
+  th, td {
+    padding: 1px; /* Reduce padding for smaller screens */
+  }
+
+  /* Stack input fields on top of each other for smaller screens */
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  /* Adjust the width of input fields for smaller screens */
+  .input-container input[type="text"] {
+    width: 100%;
+    max-width: 100%; /* Adjust the width as needed */
+  }
+}

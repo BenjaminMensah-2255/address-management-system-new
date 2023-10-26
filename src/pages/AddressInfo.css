@@ -1,0 +1,15 @@
+/* AddressInfo.css */
+.address-info-container {
+  text-align: center; /* Center the content horizontally */
+}
+
+.address-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh; /* Ensure the section takes up at least the full viewport height */
+}
+
+.address-details {
+  text-align: left; /* Align the text within the address-details div to the left */
+}

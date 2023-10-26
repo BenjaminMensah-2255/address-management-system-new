@@ -1,0 +1,104 @@
+*{
+  margin: 0;
+
+}
+
+/* Navbar styles for larger screens */
+.navbar {
+  background-color: #3c009d;
+  display: flex;
+  align-items: center;
+  padding: 0.625rem;
+  padding-right: 3.125rem;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+  transition: color 0.3s;
+  margin: 5px 40px;
+  font-weight: bold;
+}
+
+.nav-link:hover {
+  color: #9d0505;
+}
+
+/* Media query for screens with a max width of 768px (typical tablet portrait) */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 0.625rem 0;
+    padding-right: 0;
+  }
+
+  /* Hamburger menu styles for smaller screens */
+  .menu-icon {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 10px;
+    position: fixed; /* This makes it stay at the left side */
+    top: 0; /* Position it at the top of the page */
+    left: 0; /* Position it on the left side */
+    background-color: #3c009d; /* Add background color */
+  }
+
+  .menu-icon.active .bar:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .menu-icon.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-icon.active .bar:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  .bar {
+    width: 25px;
+    height: 2px;
+    background-color: white;
+    margin: 4px 0;
+    transition: 0.4s;
+  }
+
+  /* Styles for hiding and showing nav-links with animation */
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background-color: #3c009d; 
+    display: ${showMenu ? 'flex' : 'none'}; /* Toggle visibility */
+    flex-direction : column;/* Match background color */
+  }
+
+  .nav-links.visible {
+    display: flex;
+    animation: slideIn 0.5s ease-in-out;
+  }
+
+  @keyframes slideIn {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  /* Adjusted styling for smaller screens */
+  .nav-link {
+    font-size: 0.9rem;
+    margin: 5px 0;
+    color: white; /* Add text color to match the navbar */
+  }
+
+}
