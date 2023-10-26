@@ -1,0 +1,10 @@
+version: "1.0"
+
+services:
+  address:
+    image: address-api
+    build: .
+    ports:
+      - '3000:3000'
+    stdin_open: true
+    tty: true
