@@ -6,5 +6,8 @@ services:
     build: .
     ports:
       - '3000:3000'
+    networks:
+      - mynetwork
+
     stdin_open: true
     tty: true

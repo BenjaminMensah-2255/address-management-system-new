@@ -199,7 +199,7 @@ function App() {
                 <th>Email</th>
                 <th>Contact</th>
                 <th>Location</th>
-                <th>Gender</th> {/* Add the Gender column */}
+                <th>Gender</th> 
                 <th>Action</th>
               </tr>
             </thead>

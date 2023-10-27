@@ -1,12 +1,13 @@
 .custom-footer {
-    background-color: #4c00b4;
-    color: #fff;
+    background-color: #f9f8fb;
+    color: #f7eeee;
     padding: 20px 0;
     text-align: center;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
+    
   }
   
   .footer-content {
@@ -15,6 +16,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+   
   }
   
   .social-links {
@@ -30,7 +32,7 @@
   
   .social-links a {
     text-decoration: none;
-    color: #fff;
+    color: #4c00b4;
     font-weight: bold;
   }
   
@@ -44,6 +46,7 @@
     }
   }
   .address{
-    color: #fff;
+    color: #4c00b4;
     margin-left: 30px;
+   font-weight: bold;
   }
