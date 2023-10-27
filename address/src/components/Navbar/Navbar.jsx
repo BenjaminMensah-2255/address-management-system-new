@@ -20,12 +20,12 @@ const Navbar = () => {
       </div>
 
       <div className={`nav-links ${showMenu ? 'visible' : ''}`}>
-        <Link to="/Homepage" className="nav-link">Home</Link>
+        <Link to="/" className="nav-link">Home</Link>
         <Link to="/aboutpage" className="nav-link">About</Link>
         <Link to="/contactpage" className="nav-link">Contact Us</Link>
         <Link to="/LoginSignup" className="nav-link">Login/Sign Up</Link>
         <Link to="/LoginSignup" className="nav-link">Log out</Link>
-        <Link to="/Address" className="nav-link">Address</Link>
+        {/* <Link to="/Address" className="nav-link">Address</Link> */}
       </div>
     </div>
   );

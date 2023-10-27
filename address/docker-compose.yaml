@@ -2,7 +2,7 @@ version: "1.0"
 
 services:
   address:
-    image: address-api
+    image: address-management-system
     build: .
     ports:
       - '3000:3000'
