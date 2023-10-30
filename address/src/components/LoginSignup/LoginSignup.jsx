@@ -14,8 +14,7 @@ const SignupLogin = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
-const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   const toggleAction = () => {
     setAction(action === "Sign Up" ? "Login" : "Sign Up");
@@ -52,10 +51,11 @@ const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
         <div className="form-container"> 
           <form onSubmit={handleFormSubmit}>
             {action === "Sign Up" && (
-              <div className="input Box" >
+              <div className="input Box">
                 <img src={user_icon} alt="" />
                 <input
-                  type="text" id='box'
+                  type="text"
+                  id='box'
                   placeholder="Name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -65,43 +65,38 @@ const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
             <div className="input Box">
               <img src={email_icon} alt="" />
               <input
-                type="email" id='box'
+                type="email"
+                id='box'
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="input Box">
-            <img src={lock_icon} alt="" />
-            <input
-             type={passwordVisible ? 'text' : 'password'}
-             placeholder="Password"
-              value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            />
-          <button
-          className="toggle-password"
-          onClick={() => setPasswordVisible(!passwordVisible)}
-          >
-          {passwordVisible ? <RiEyeCloseFill /> : <RiEyeFill />}
-          </button>
-          </div>
-            {action === "Sign Up" && (
-              <div className="input Box">
               <img src={lock_icon} alt="" />
               <input
-                type={confirmPasswordVisible ? 'text' : 'password'}
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                type={passwordVisible ? 'text' : 'password'}
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
-              <button
-                className="toggle-password"
-                onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
-              >
-                {confirmPasswordVisible ? <RiEyeCloseFill /> : <RiEyeFill />}
-              </button>
+              <div className="toggle-password" onClick={() => setPasswordVisible(!passwordVisible)}>
+                {passwordVisible ? <RiEyeCloseFill /> : <RiEyeFill />}
+              </div>
             </div>
+            {action === "Sign Up" && (
+              <div className="input Box">
+                <img src={lock_icon} alt="" />
+                <input
+                  type={confirmPasswordVisible ? 'text' : 'password'}
+                  placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+                <div className="toggle-password" onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}>
+                  {confirmPasswordVisible ? <RiEyeCloseFill /> : <RiEyeFill />}
+                </div>
+              </div>
             )}
             {action === "Login" && (
               <div className="forgot-password">
