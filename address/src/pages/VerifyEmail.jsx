@@ -20,7 +20,7 @@ const VerifyEmail = () => {
       <label className="label1">Please Enter Your Email</label>
       <input
         type="email"
-        placeholder="Email"
+        placeholder="yourEmail@gmail.com"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         className="email1"

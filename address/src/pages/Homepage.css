@@ -21,9 +21,12 @@
   align-items: center;
 }
 
+
 .welcome-title {
   font-size: 2.5rem;
   animation: welcomeMotion 2s infinite linear; /* Reduced the animation duration to 2 seconds */
+  text-transform: uppercase;
+  font-family: sans-serif;
 }
 
 @keyframes welcomeMotion {
@@ -38,9 +41,14 @@
   }
 }
 
+
 .pen {
   font-size: 1.25rem;
   margin: 1rem;
+  font-style: italic;
+}
+.book{
+  font-weight: bold;
 }
 
 .home-button {
@@ -51,10 +59,12 @@
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;
+  text-transform: uppercase;
 }
 
 .home-button:hover {
-  background-color: #e64a19; /* Change the hover color to your preference */
+  background-color: #e64a19; 
+  /* text-decoration: underline; */
 }
 
 /* Style the main content section as needed */

@@ -4,6 +4,7 @@ import user_icon from '../assets/user_icon.png';
 import email_icon from '../assets/email_icon.png';
 import lock_icon from '../assets/lock_icon.png';
 import { useNavigate } from 'react-router-dom';
+import { RiEyeFill, RiEyeCloseFill } from 'react-icons/ri';
 
 const SignupLogin = () => {
   const navigate = useNavigate(); 
@@ -12,6 +13,9 @@ const SignupLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
+const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+
 
   const toggleAction = () => {
     setAction(action === "Sign Up" ? "Login" : "Sign Up");
@@ -68,28 +72,40 @@ const SignupLogin = () => {
               />
             </div>
             <div className="input Box">
-              <img src={lock_icon} alt="" />
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
+            <img src={lock_icon} alt="" />
+            <input
+             type={passwordVisible ? 'text' : 'password'}
+             placeholder="Password"
+              value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            />
+          <button
+          className="toggle-password"
+          onClick={() => setPasswordVisible(!passwordVisible)}
+          >
+          {passwordVisible ? <RiEyeCloseFill /> : <RiEyeFill />}
+          </button>
+          </div>
             {action === "Sign Up" && (
               <div className="input Box">
-                <img src={lock_icon} alt="" />
-                <input
-                  type="password"
-                  placeholder="Confirm Password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-              </div>
+              <img src={lock_icon} alt="" />
+              <input
+                type={confirmPasswordVisible ? 'text' : 'password'}
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              <button
+                className="toggle-password"
+                onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
+              >
+                {confirmPasswordVisible ? <RiEyeCloseFill /> : <RiEyeFill />}
+              </button>
+            </div>
             )}
             {action === "Login" && (
               <div className="forgot-password">
-                Forgot your password? <span><a href="VerifyEmail">click here</a></span>
+                Forgot your password? <span><a href="VerifyEmail" className='click-here'>click here</a></span>
               </div>
             )}
             <div className="submit-container">

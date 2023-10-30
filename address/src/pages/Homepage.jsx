@@ -20,16 +20,17 @@ const Homepage = () => {
         <p className="pen">Organize and manage your addresses with ease. Start managing your addresses today</p>
         <p className="book"> Click the button below to access your address book.</p> <br/><br/>
         <button className="home-button" onClick={handleSubmission} style={{ animation: 'buttonAppear 1s ease forwards' }}>
-  Get Started
-</button>
+        Get Started
+        </button>
 
       </header>
 
       <main className="home-main">
-      
+      <i className="flat-icon"></i>
+
         {/* Your main content here */}
       </main>
-
+      
       <Footer />
     </div>
   );

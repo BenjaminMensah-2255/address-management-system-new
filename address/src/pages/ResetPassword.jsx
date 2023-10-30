@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 import './ResetPassword.css';
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -13,24 +15,45 @@ const ResetPassword = () => {
     setConfirmPassword(e.target.value);
   };
 
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="reset-password-container">
       <h1>Address Management System</h1>
-      <p>Enter your email and your new password</p>
+      <p>Enter Your new password</p>
 
       <div className="form-group">
-        <label htmlFor="email">Enter Your email:</label>
-        <input type="email" id="email" placeholder="yourEmail@gmail.com" />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="password">Choose new Password:</label>
-        <input type="password" id="password" placeholder='**********' value={password} onChange={handlePasswordChange} />
+        <label htmlFor="password">Password:</label>
+        <div className="password-input">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            id="password"
+            placeholder="**********"
+            value={password}
+            onChange={handlePasswordChange}
+          />
+          <span className="password-toggle" onClick={toggleShowPassword}>
+            {showPassword ? <FiEyeOff /> : <FiEye />}
+          </span>
+        </div>
       </div>
 
       <div className="form-group">
         <label htmlFor="confirmPassword">Confirm Password:</label>
-        <input type="password" id="confirmPassword" placeholder='**********'  value={confirmPassword} onChange={handleConfirmPasswordChange} />
+        <div className="password-input">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            id="confirmPassword"
+            placeholder="**********"
+            value={confirmPassword}
+            onChange={handleConfirmPasswordChange}
+          />
+          <span className="password-toggle" onClick={toggleShowPassword}>
+            {showPassword ? <FiEyeOff /> : <FiEye />}
+          </span>
+        </div>
       </div>
 
       <button type="submit" className="submit-button">

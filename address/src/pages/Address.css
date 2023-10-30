@@ -122,6 +122,7 @@
 }
 .addressHead {
   color: #9d0505;
+  text-decoration: underline;
   text-transform: uppercase;
   text-align: center;
   font-weight: bold;
