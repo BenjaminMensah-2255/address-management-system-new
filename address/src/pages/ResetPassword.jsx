@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 import './ResetPassword.css';
 
 const ResetPassword = () => {
+  const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -17,6 +19,13 @@ const ResetPassword = () => {
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleSubmit = () => {
+    // Handle your password reset logic here
+
+    // After handling the password reset, navigate to the LoginSignup page
+    navigate('/LoginSignup');
   };
 
   return (
@@ -56,7 +65,7 @@ const ResetPassword = () => {
         </div>
       </div>
 
-      <button type="submit" className="submit-button">
+      <button type="button" className="submit-button" onClick={handleSubmit}>
         Submit
       </button>
     </div>

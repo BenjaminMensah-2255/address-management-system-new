@@ -9,8 +9,14 @@ services:
     networks:
       - address-api
 
+<<<<<<< HEAD
     stdin_open: true
     tty: true
 
 networks:
   address-api:
+=======
+networks:
+  address-api:
+  
+>>>>>>> dc827756fe34f430fb0ec009cea7187bdfd8a889
