@@ -66,6 +66,24 @@ function App() {
   //   }
 
   // };
+  useEffect(() => {
+    // Define a function to fetch data from the backend
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/api/index.php'); // Replace with your backend API URL
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const jsonData = await response.json();
+        setData(jsonData); // Update the data state with the fetched addresses
+      } catch (error) {
+        console.error('There was a problem fetching data:', error);
+      }
+    };
+
+    // Call the fetchData function when the component mounts
+    fetchData();
+  }, []);
   const addTask = () => {
     if (newName && newEmail && newContact && newLocation && newGender) {
       // Regular expression to validate email format
@@ -80,7 +98,7 @@ function App() {
                 name: newName,
                 email: newEmail,
                 contact: newContact,
-                location: newLocation,
+                address: newLocation,
                 gender: newGender,
               },
             ];
@@ -214,11 +232,12 @@ const deleteTask = (index) => {
     if (newName && newEmail && newContact && newLocation && newGender && editingIndex !== null) {
       const updatedData = [...data];
       updatedData[editingIndex] = {
+       
         name: newName,
-              gender: newGender,
-              address: newLocation,
-              email: newEmail,
-              contact: newContact,
+        gender: newGender,
+        address: newLocation,
+        email: newEmail,
+        contact: newContact,
       };
       setData(updatedData);
       setNewName('');
@@ -229,36 +248,60 @@ const deleteTask = (index) => {
       setEditingIndex(null);
   
       // Prepare the data to send
-      const postData = {
+      const putData = {
+        id: 2,
         name: newName,
-              gender: newGender,
-              address: newLocation,
-              email: newEmail,
-              contact: newContact,
+        gender: newGender,
+        address: newLocation,
+        email: newEmail,
+        contact: newContact
       };
   
       // Make an HTTP POST request to the PHP backend
+      // fetch('http://localhost:8000/api/index.php', {
+      //   method: 'PUT',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(putData),
+      // })
+      //   .then((response) => {
+      //     if (!response.ok) {
+      //       throw new Error('Network response was not ok');
+      //     }
+      //     return response.json();
+      //   })
+      //   .then((data) => {
+      //     // Handle the response from the PHP backend as needed
+      //     console.log(data);
+      //   })
+      //   .catch((error) => {
+      //     // Handle errors, e.g., network issues or errors from the backend
+      //     console.error('There was a problem with the fetch operation:', error);
+      //   });
+
       fetch('http://localhost:8000/api/index.php', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(postData),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then((data) => {
-          // Handle the response from the PHP backend as needed
-          console.log(data);
-        })
-        .catch((error) => {
-          // Handle errors, e.g., network issues or errors from the backend
-          console.error('There was a problem with the fetch operation:', error);
-        });
+  method: 'PUT',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(putData),
+})
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then((data) => {
+    // Handle the response from the PHP backend as needed
+    console.log(data);
+  })
+  .catch((error) => {
+    // Handle errors, e.g., network issues or unexpected server responses
+    console.error('There was a problem with the fetch operation:', error);
+  });
+
     }
   };
   
@@ -354,6 +397,7 @@ const deleteTask = (index) => {
           <table>
             <thead>
               <tr>
+                <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Contact</th>
@@ -363,65 +407,67 @@ const deleteTask = (index) => {
               </tr>
             </thead>
             <tbody>
-              {filteredData.slice(indexOfFirstItem, indexOfLastItem).map((task, index) => (
-                <tr key={index}>
-                  <td>
-                    {index === editingIndex ? (
-                      <input
-                        type="text"
-                        value={newName}
-                        onChange={(e) => setNewName(e.target.value)}
-                      />
-                    ) : task.name}
-                  </td>
-                  <td>
-                    {index === editingIndex ? (
-                      <input
-                        type="text"
-                        value={newEmail}
-                        onChange={(e) => setNewEmail(e.target.value)}
-                      />
-                    ) : task.email}
-                  </td>
-                  <td>
-                    {index === editingIndex ? (
-                      <input
-                        type="text"
-                        value={newContact}
-                        onChange={(e) => setNewContact(e.target.value)}
-                      />
-                    ) : task.contact}
-                  </td>
-                  <td>
-                    {index === editingIndex ? (
-                      <input
-                        type="text"
-                        value={newLocation}
-                        onChange={(e) => setNewLocation(e.target.value)}
-                      />
-                    ) : task.location}
-                  </td>
-                  <td>
-                    {index === editingIndex ? (
-                      <input
-                        type="text"
-                        value={newGender}
-                        onChange={(e) => setNewGender(e.target.value)}
-                      />
-                    ) : task.gender}
-                  </td>
-                  <td>
-                    {index === editingIndex ? (
-                      <button onClick={updateTask} className="update-button">Update</button>
-                    ) : (
-                      <>
-                        <button onClick={() => editTask(index)} className="edit-button">Edit</button>
-                        <button onClick={() => deleteTask(index)} className="delete-button">Delete</button>
-                      </>
-                    )}
-                  </td>
-                </tr>
-              ))}
+            {filteredData.slice(indexOfFirstItem, indexOfLastItem).map((task, index) => (
+  <tr key={task.id}>
+    <td>{task.id}</td>
+    <td>
+      {index === editingIndex ? (
+        <input
+          type="text"
+          value={newName}
+          onChange={(e) => setNewName(e.target.value)}
+        />
+      ) : task.name}
+    </td>
+    <td>
+      {index === editingIndex ? (
+        <input
+          type="text"
+          value={newEmail}
+          onChange={(e) => setNewEmail(e.target.value)}
+        />
+      ) : task.email}
+    </td>
+    <td>
+      {index === editingIndex ? (
+        <input
+          type="text"
+          value={newContact}
+          onChange={(e) => setNewContact(e.target.value)}
+        />
+      ) : task.contact}
+    </td>
+    <td>
+      {index === editingIndex ? (
+        <input
+          type="text"
+          value={newLocation}
+          onChange={(e) => setNewLocation(e.target.value)}
+        />
+      ) : task.address}
+    </td>
+    <td>
+      {index === editingIndex ? (
+        <input
+          type="text"
+          value={newGender}
+          onChange={(e) => setNewGender(e.target.value)}
+        />
+      ) : task.gender}
+    </td>
+    <td>
+      {index === editingIndex ? (
+        <button onClick={updateTask} className="update-button">Update</button>
+      ) : (
+        <>
+          <button onClick={() => editTask(index)} className="edit-button">Edit</button>
+          <button onClick={() => deleteTask(index)} className="delete-button">Delete</button>
+        </>
+      )}
+    </td>
+  </tr>
+))}
+
             </tbody>
           </table>
         </div>
