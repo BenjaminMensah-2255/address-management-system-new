@@ -14,20 +14,63 @@ function App() {
   const [contactErrorMessage, setContactErrorMessage] = useState(''); // State for error message
   const itemsPerPage = 5;
 
-  useEffect(() => {
-    const savedData = JSON.parse(localStorage.getItem('addressData')) || [];
-    setData(savedData);
-  }, []);
+  // useEffect(() => {
+  //   const savedData = JSON.parse(localStorage.getItem('addressData')) || [];
+  //   setData(savedData);
+  // }, []);
 
-  useEffect(() => {
-    localStorage.setItem('addressData', JSON.stringify(data));
-  }, [data]);
+  // useEffect(() => {
+  //   localStorage.setItem('addressData', JSON.stringify(data));
+  // }, [data]);
 
+  // const addTask = () => {
+  //   if (newName && newEmail && newContact && newLocation && newGender) {
+  //     // Regular expression to validate email format
+  //     const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+      
+  //     if (emailPattern.test(newEmail)) {
+  //       if (/^\d+$/.test(newContact)) {
+  //         if (newContact.length === 10) {
+  //           const newData = [
+  //             ...data,
+  //             {
+  //               name: newName,
+  //               email: newEmail,
+  //               contact: newContact,
+  //               location: newLocation,
+  //               gender: newGender,
+  //             },
+  //           ];
+  //           setData(newData);
+  //           setNewName('');
+  //           setNewEmail('');
+  //           setNewContact('');
+  //           setNewLocation('');
+  //           setNewGender('');
+  //           setContactErrorMessage(''); // Clear the error message
+  //         } else {
+  //           // Display an alert message
+  //           alert('Contact should be a 10-digit number.');
+  //         }
+  //       } else {
+  //         // Display an alert message
+  //         alert('Contact should contain only numeric characters.');
+  //       }
+  //     } else {
+  //       // Display an alert message
+  //       alert('Email address is not in the correct format.');
+  //     }
+  //   } else {
+  //     // Display an alert message
+  //     alert('All fields (except Email) are required.');
+  //   }
+
+  // };
   const addTask = () => {
     if (newName && newEmail && newContact && newLocation && newGender) {
       // Regular expression to validate email format
       const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-      
+  
       if (emailPattern.test(newEmail)) {
         if (/^\d+$/.test(newContact)) {
           if (newContact.length === 10) {
@@ -48,6 +91,40 @@ function App() {
             setNewLocation('');
             setNewGender('');
             setContactErrorMessage(''); // Clear the error message
+  
+            // Prepare the data to send
+            const postData = {
+              name: newName,
+              gender: newGender,
+              address: newLocation,
+              email: newEmail,
+              contact: newContact,
+              
+              
+            };
+  
+            // Make an HTTP POST request to the PHP backend
+            fetch('http://localhost:8000/api/index.php', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(postData),
+            })
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                return response.json();
+              })
+              .then((data) => {
+                // Handle the response from the PHP backend as needed
+                console.log(data);
+              })
+              .catch((error) => {
+                // Handle errors, e.g., network issues or errors from the backend
+                console.error('There was a problem with the fetch operation:', error);
+              });
           } else {
             // Display an alert message
             alert('Contact should be a 10-digit number.');
@@ -67,11 +144,42 @@ function App() {
   };
   
 
-  const deleteTask = (index) => {
-    const newData = [...data];
-    newData.splice(index, 1);
-    setData(newData);
-  };
+  // const deleteTask = (index) => {
+  //   const newData = [...data];
+  //   newData.splice(index, 1);
+  //   setData(newData);
+  // };
+const deleteTask = (index) => {
+  // Assuming you have a unique identifier for each item, like an ID
+  const itemToDelete = data[index];
+
+  // Make an HTTP DELETE request to the PHP backend
+  fetch('http://localhost:8000/api/index.php', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(itemToDelete), // You can pass the item data or ID here
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // Handle the response from the PHP backend as needed
+      console.log(data);
+    })
+    .catch((error) => {
+      // Handle errors, e.g., network issues or errors from the backend
+      console.error('There was a problem with the fetch operation:', error);
+    });
+
+  const newData = [...data];
+  newData.splice(index, 1);
+  setData(newData);
+};
 
   const editTask = (index) => {
     setEditingIndex(index);
@@ -83,15 +191,34 @@ function App() {
     setNewGender(taskToEdit.gender); // Set the gender for editing
   };
 
+  // const updateTask = () => {
+  //   if (newName && newEmail && newContact && newLocation && newGender && editingIndex !== null) {
+  //     const updatedData = [...data];
+  //     updatedData[editingIndex] = {
+  //       name: newName,
+  //       email: newEmail,
+  //       contact: newContact,
+  //       location: newLocation,
+  //       gender: newGender, // Update gender
+  //     };
+  //     setData(updatedData);
+  //     setNewName('');
+  //     setNewEmail('');
+  //     setNewContact('');
+  //     setNewLocation('');
+  //     setNewGender('');
+  //     setEditingIndex(null);
+  //   }
+  // };
   const updateTask = () => {
     if (newName && newEmail && newContact && newLocation && newGender && editingIndex !== null) {
       const updatedData = [...data];
       updatedData[editingIndex] = {
         name: newName,
-        email: newEmail,
-        contact: newContact,
-        location: newLocation,
-        gender: newGender, // Update gender
+              gender: newGender,
+              address: newLocation,
+              email: newEmail,
+              contact: newContact,
       };
       setData(updatedData);
       setNewName('');
@@ -100,9 +227,41 @@ function App() {
       setNewLocation('');
       setNewGender('');
       setEditingIndex(null);
+  
+      // Prepare the data to send
+      const postData = {
+        name: newName,
+              gender: newGender,
+              address: newLocation,
+              email: newEmail,
+              contact: newContact,
+      };
+  
+      // Make an HTTP POST request to the PHP backend
+      fetch('http://localhost:8000/api/index.php', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Handle the response from the PHP backend as needed
+          console.log(data);
+        })
+        .catch((error) => {
+          // Handle errors, e.g., network issues or errors from the backend
+          console.error('There was a problem with the fetch operation:', error);
+        });
     }
   };
-
+  
   const nextPage = () => {
     if (currentPage < Math.ceil(filteredData.length / itemsPerPage)) {
       setCurrentPage(currentPage + 1);
