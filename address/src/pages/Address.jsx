@@ -13,6 +13,9 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [contactErrorMessage, setContactErrorMessage] = useState(''); // State for error message
   const itemsPerPage = 5;
+  const [editingItemId, setEditingItemId] = useState(null);
+  const [itemToDel, setDeleteItemId] = useState(null);
+
 
   // useEffect(() => {
   //   const savedData = JSON.parse(localStorage.getItem('addressData')) || [];
@@ -170,6 +173,7 @@ function App() {
 const deleteTask = (index) => {
   // Assuming you have a unique identifier for each item, like an ID
   const itemToDelete = data[index];
+  setDeleteItemId(itemToDel);
 
   // Make an HTTP DELETE request to the PHP backend
   fetch('http://localhost:8000/api/index.php', {
@@ -207,32 +211,15 @@ const deleteTask = (index) => {
     setNewContact(taskToEdit.contact);
     setNewLocation(taskToEdit.location);
     setNewGender(taskToEdit.gender); // Set the gender for editing
+    setEditingItemId(taskToEdit.id);
   };
 
-  // const updateTask = () => {
-  //   if (newName && newEmail && newContact && newLocation && newGender && editingIndex !== null) {
-  //     const updatedData = [...data];
-  //     updatedData[editingIndex] = {
-  //       name: newName,
-  //       email: newEmail,
-  //       contact: newContact,
-  //       location: newLocation,
-  //       gender: newGender, // Update gender
-  //     };
-  //     setData(updatedData);
-  //     setNewName('');
-  //     setNewEmail('');
-  //     setNewContact('');
-  //     setNewLocation('');
-  //     setNewGender('');
-  //     setEditingIndex(null);
-  //   }
-  // };
+  
   const updateTask = () => {
     if (newName && newEmail && newContact && newLocation && newGender && editingIndex !== null) {
       const updatedData = [...data];
       updatedData[editingIndex] = {
-       
+        id: editingItemId, 
         name: newName,
         gender: newGender,
         address: newLocation,
@@ -249,7 +236,7 @@ const deleteTask = (index) => {
   
       // Prepare the data to send
       const putData = {
-        id: 2,
+        id: editingItemId, 
         name: newName,
         gender: newGender,
         address: newLocation,
@@ -257,28 +244,7 @@ const deleteTask = (index) => {
         contact: newContact
       };
   
-      // Make an HTTP POST request to the PHP backend
-      // fetch('http://localhost:8000/api/index.php', {
-      //   method: 'PUT',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(putData),
-      // })
-      //   .then((response) => {
-      //     if (!response.ok) {
-      //       throw new Error('Network response was not ok');
-      //     }
-      //     return response.json();
-      //   })
-      //   .then((data) => {
-      //     // Handle the response from the PHP backend as needed
-      //     console.log(data);
-      //   })
-      //   .catch((error) => {
-      //     // Handle errors, e.g., network issues or errors from the backend
-      //     console.error('There was a problem with the fetch operation:', error);
-      //   });
+      
 
       fetch('http://localhost:8000/api/index.php', {
   method: 'PUT',
@@ -321,16 +287,18 @@ const deleteTask = (index) => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   // Filter the data based on the search query
-  const filteredData = data.filter((item) => {
-    const search = searchQuery.toLowerCase();
-    return (
-      item.name.toLowerCase().includes(search) ||
-      item.email.toLowerCase().includes(search) ||
-      item.contact.toLowerCase().includes(search) ||
-      item.location.toLowerCase().includes(search) ||
-      item.gender.toLowerCase().includes(search) // Filter by gender
-    );
-  });
+  // Filter the data based on the search query
+const filteredData = data.filter((item) => {
+  const search = searchQuery.toLowerCase();
+  return (
+    (item.name && item.name.toLowerCase().includes(search)) ||
+    (item.email && item.email.toLowerCase().includes(search)) ||
+    (item.contact && item.contact.toLowerCase().includes(search)) ||
+    (item.location && item.location.toLowerCase().includes(search)) ||
+    (item.gender && item.gender.toLowerCase().includes(search)) // Filter by gender
+  );
+});
+
 
   return (
     <div className="app-container page-content">
