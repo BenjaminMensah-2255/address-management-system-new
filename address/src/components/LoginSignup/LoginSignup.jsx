@@ -11,7 +11,7 @@ const SignupLogin = () => {
   const [action, setAction] = useState("Sign Up");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPwd] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
@@ -24,11 +24,7 @@ const SignupLogin = () => {
     e.preventDefault();
     if (action === "Sign Up") {
       if (password === confirmPassword) {
-        console.log("Sign Up");
-        console.log("Name:", name);
-        console.log("Email:", email);
-        console.log("Password:", password);
-        console.log("Confirm Password:", confirmPassword);
+        createAccount()
       } else {
         console.log("Passwords do not match.");
       }
@@ -41,6 +37,50 @@ const SignupLogin = () => {
     }
   };
 
+  const createAccount = () => {
+    if (setName && setEmail && setPwd) {
+      // Regular expression to validate email format
+      const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+  
+      if (emailPattern.test(setEmail)) {
+            
+            // Prepare the data to send
+            const postData = {
+              name: setName,
+              email: setEmail,
+              pwd: setPwd,
+            };
+  
+            // Make an HTTP POST request to the PHP backend
+            fetch('http://localhost:8000/api/auth/signup.php', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(postData),
+            })
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                return response.json();
+              })
+              .then((data) => {
+                // Handle the response from the PHP backend as needed
+                console.log(data);
+              })
+              .catch((error) => {
+                // Handle errors, e.g., network issues or errors from the backend
+                console.error('There was a problem with the fetch operation:', error);
+              });
+          } 
+       
+      } else {
+        // Display an alert message
+        alert('Email address is not in the correct format.');
+      }
+    } 
+   
   return (
     <div> 
       <div className='container page-content'>
@@ -78,7 +118,7 @@ const SignupLogin = () => {
                 type={passwordVisible ? 'text' : 'password'}
                 placeholder="Password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setPwd(e.target.value)}
               />
               <div className="toggle-password" onClick={() => setPasswordVisible(!passwordVisible)}>
                 {passwordVisible ? <RiEyeCloseFill /> : <RiEyeFill />}
@@ -118,6 +158,9 @@ const SignupLogin = () => {
       </div>
     </div>   
   );
+
+  
+  
 }
 
 export default SignupLogin;
