@@ -5,13 +5,13 @@ import email_icon from '../assets/email_icon.png';
 import lock_icon from '../assets/lock_icon.png';
 import { useNavigate } from 'react-router-dom';
 import { RiEyeFill, RiEyeCloseFill } from 'react-icons/ri';
-
+import Homepage from '../../pages/Homepage';
 const SignupLogin = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const [action, setAction] = useState("Sign Up");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPwd] = useState("");
+  const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
@@ -24,71 +24,114 @@ const SignupLogin = () => {
     e.preventDefault();
     if (action === "Sign Up") {
       if (password === confirmPassword) {
-        createAccount()
+        createAccount();
       } else {
         console.log("Passwords do not match.");
       }
     } else if (action === "Login") {
-      console.log("Login");
-      console.log("Email:", email);
-      console.log("Password:", password);
+    
       // User clicked the Login button, navigate to the Address page
-      navigate('/Address');
+      loginUser();{
+        
+      }
+     
     }
   };
 
   const createAccount = () => {
-    if (setName && setEmail && setPwd) {
-      // Regular expression to validate email format
-      const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-  
-      if (emailPattern.test(setEmail)) {
-            
-            // Prepare the data to send
-            const postData = {
-              name: setName,
-              email: setEmail,
-              pwd: setPwd,
-            };
-  
-            // Make an HTTP POST request to the PHP backend
-            fetch('http://localhost:8000/api/auth/signup.php', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(postData),
-            })
-              .then((response) => {
-                if (!response.ok) {
-                  throw new Error('Network response was not ok');
-                }
-                return response.json();
-              })
-              .then((data) => {
-                // Handle the response from the PHP backend as needed
-                console.log(data);
-              })
-              .catch((error) => {
-                // Handle errors, e.g., network issues or errors from the backend
-                console.error('There was a problem with the fetch operation:', error);
-              });
-          } 
-       
-      } else {
-        // Display an alert message
-        alert('Email address is not in the correct format.');
-      }
-    } 
-   
+    // Regular expression to validate email format
+    const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+
+    if (!name || !email || !password) {
+      alert('Please fill in all fields.');
+    } else if (!emailPattern.test(email)) {
+      alert('Email address is not in the correct format.');
+    } else {
+      // Prepare the data to send
+      const postData = {
+        name: name,
+        email: email,
+        pwd: password
+      };
+
+      // Make an HTTP POST request to the PHP backend
+      fetch('http://localhost:8000/api/auth/signup.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Handle the response from the PHP backend as needed
+          console.log(data);
+          // Optionally, you can navigate to another page upon successful registration
+          navigate('/');
+        })
+        .catch((error) => {
+          // Handle errors, e.g., network issues or errors from the backend
+          console.error('There was a problem with the fetch operation:', error);
+        });
+    }
+  };
+
+  const loginUser = () => {
+    // Regular expression to validate email format
+    const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+
+    if (!email || !password) {
+      alert('Please fill in all fields.');
+    } else if (!emailPattern.test(email)) {
+      alert('Email address is not in the correct format.');
+    } else {
+      // Prepare the data to send
+      const postData = {
+        email: email,
+        pwd: password
+      };
+
+      // Make an HTTP POST request to the PHP backend
+      fetch('http://localhost:8000/api/auth/signin.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Handle the response from the PHP backend as needed
+          console.log(data);
+          // Optionally, you can navigate to another page upon successful registration
+        })
+        .catch((error) => {
+          // Handle errors, e.g., network issues or errors from the backend
+          console.error('There was a problem with the fetch operation:', error);
+        });
+    }
+
+    // navigate('/Address');
+  };
+//  {createAccount?login:signup}
   return (
-    <div> 
+    <div>
       <div className='container page-content'>
         <div className="header">
           <div className="text">{action}</div>
           <div className="underline"></div>
         </div>
-        <div className="form-container"> 
+        <div className="form-container">
           <form onSubmit={handleFormSubmit}>
             {action === "Sign Up" && (
               <div className="input Box">
@@ -118,7 +161,7 @@ const SignupLogin = () => {
                 type={passwordVisible ? 'text' : 'password'}
                 placeholder="Password"
                 value={password}
-                onChange={(e) => setPwd(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <div className="toggle-password" onClick={() => setPasswordVisible(!passwordVisible)}>
                 {passwordVisible ? <RiEyeCloseFill /> : <RiEyeFill />}
@@ -149,18 +192,15 @@ const SignupLogin = () => {
               </button>
             </div>
           </form>
-        </div> 
+        </div>
         <div className="toggle-action" onClick={toggleAction}>
           {action === "Sign Up"
             ? "Already have an account? Login"
             : "Don't have an account? Sign Up"}
         </div>
       </div>
-    </div>   
+    </div>
   );
-
-  
-  
 }
 
 export default SignupLogin;

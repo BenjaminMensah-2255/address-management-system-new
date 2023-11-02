@@ -15,7 +15,7 @@ function App() {
   const itemsPerPage = 5;
   const [editingItemId, setEditingItemId] = useState(null);
   const [itemToDel, setDeleteItemId] = useState(null);
-  const [shouldRefresh, setShouldRefresh] = useState(false);
+
   const [editingStates, setEditingStates] = useState([]);
 
   useEffect(() => {
@@ -37,8 +37,84 @@ function App() {
   }, []);
 
   const addTask = () => {
-    // Validation code remains the same
+    if (newName && newEmail && newContact && newLocation && newGender) {
+      // Regular expression to validate email format
+      const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+  
+      if (emailPattern.test(newEmail)) {
+        if (/^\d+$/.test(newContact)) {
+          if (newContact.length === 10) {
+            const newData = [
+              ...data,
+              {
+                name: newName,
+                email: newEmail,
+                contact: newContact,
+                address: newLocation,
+                gender: newGender,
+              },
+            ];
+            setData(newData);
+            setNewName('');
+            setNewEmail('');
+            setNewContact('');
+            setNewLocation('');
+            setNewGender('');
+            setContactErrorMessage(''); // Clear the error message
+  
+            // Prepare the data to send
+            const postData = {
+              name: newName,
+              gender: newGender,
+              address: newLocation,
+              email: newEmail,
+              contact: newContact,
+              
+              
+            };
+  
+            // Make an HTTP POST request to the PHP backend
+            fetch('http://localhost:8000/api/index.php', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(postData),
+            })
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                return response.json();
+              })
+              .then((data) => {
+                // Handle the response from the PHP backend as needed
+                console.log(data);
+                window.location.reload();
+              })
+              .catch((error) => {
+                // Handle errors, e.g., network issues or errors from the backend
+                console.error('There was a problem with the fetch operation:', error);
+              });
+          } else {
+            // Display an alert message
+            alert('Contact should be a 10-digit number.');
+          }
+        } else {
+          // Display an alert message
+          alert('Contact should contain only numeric characters.');
+        }
+      } else {
+        // Display an alert message
+        alert('Email address is not in the correct format.');
+      }
+    } else {
+      // Display an alert message
+      alert('All fields (except Email) are required.');
+    }
   };
+
+
 
   const deleteTask = (index) => {
     const itemToDelete = data[index];

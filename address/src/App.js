@@ -11,6 +11,7 @@ import Footer from './pages/Footer';
 import VerifyEmail from './pages/VerifyEmail';
 import ResetPassword from './pages/ResetPassword';
 
+
 function App() {
   return (
     <div>
